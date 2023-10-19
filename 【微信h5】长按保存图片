@@ -1,0 +1,109 @@
+## 问题
+h5页面 在浏览器 微信h5 微信小程序，用户长按保存，弹出保存图片的选项
+怎样可以实现？
+
+## 结论
+必须使用img标签 长按才能识别
+如果想要在img标签的图上 展示另外的图，需要将要保存的海报图层级设高 然后 opacity：0
+
+## 测试如下
+https://pages.c-ctrip.com/market/components/demo/wxmp-img-test.html?3213234234
+<!-- 长按可以保存成功 -->
+ 第一种情况 img标签
+<img src="https://images3.c-ctrip.com/marketing/task_components/nanbo/card10.png" alt="">
+
+<!-- 长按可以保存成功 -->
+第二种情况 backgroundImage + inner img
+<div class="box3">
+    <img class="box3-img" src="https://pages.c-ctrip.com/market/components/demo/txxcmdt.png" alt="">
+</div>
+
+<!-- 长按不能识别 -->
+第三种情况 backgroundImage
+<div class="box"></div>
+
+<!-- 长按不能识别 -->
+<!-- 第四种情况 backgroundImage + img -->
+<div class="box2">
+    <div class="box2-inner"></div>
+    <img class="box2-img" src="https://pages.c-ctrip.com/market/components/demo/txxcmdt.png" alt="">
+</div>
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 300px;
+            height: 300px;
+            background-image: url(https://images3.c-ctrip.com/marketing/task_components/nanbo/card10.png);
+            background-size: 100% 100%;
+            background-position: center;
+        }
+        .box2{
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+        .box2-inner{
+            position: relative;
+            z-index: 10;
+            width: 300px;
+            height: 300px;
+            background-image: url(https://images3.c-ctrip.com/marketing/task_components/nanbo/card10.png);
+            background-size: 100% 100%;
+            background-position: center;
+        }
+        .box2-img{
+            position: absolute;
+            top: 0;
+            width: 300px;
+            height: 300px;
+        }
+
+        .box3{
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-image: url(https://images3.c-ctrip.com/marketing/task_components/nanbo/card10.png);
+            background-size: 100% 100%;
+            background-position: center;
+        }
+        .box3-img{
+            position: absolute;
+            top: 0;
+            width: 300px;
+            height: 300px;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 第一种情况 img标签 -->
+    <!-- 长按可以保存成功 -->
+    <img src="https://images3.c-ctrip.com/marketing/task_components/nanbo/card10.png" alt="">
+
+    <!-- 第二种情况 backgroundImage -->
+    <!-- 长按不能识别 -->
+    <div class="box"></div>
+
+    <!-- 第三种情况 backgroundImage + img -->
+    <!-- 长按不能识别 -->
+    <div class="box2">
+        <div class="box2-inner"></div>
+        <img class="box2-img" src="https://pages.c-ctrip.com/market/components/demo/txxcmdt.png" alt="">
+    </div>
+
+    <!-- 第四种情况 backgroundImage + inner img -->
+    <!-- 长按可以保存成功 -->
+    <div class="box3">
+        <img class="box3-img" src="https://pages.c-ctrip.com/market/components/demo/txxcmdt.png" alt="">
+    </div>
+</body>
+</html>
+```
